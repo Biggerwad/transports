@@ -9,11 +9,7 @@ function Welcome() {
                 Welcome to the RCCG PPP Transport Booking Platform
             </p>
             <br />
-            <button onClick={() => navigate('/requests')}
-                className="text-white bg-gray-600 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-            >
-                Request a ride
-            </button> <br /> <br />
+            
 
             {/* <button onClick={() => navigate('/requests')}
                 className="text-white bg-gray-600 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"

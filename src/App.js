@@ -8,11 +8,13 @@ import Modifyoperator from './pages/Modifyoperator';
 import OperatorContextProvider from './hooks/OperatorContext';
 import ProtectedRoute from './hooks/ProtectedRoute';
 import Loader from './components/Loader';
-import Welcome from './components/Welcome';
+import ForgotPassword from './pages/host/forgotPassword';
+import Welcome from './pages/Welcome';
+import Signup from './pages/host/Signup';
 
 function App() {
-  const [loading, setLoading] = useState(); 
-  const location = useLocation(); 
+  const [loading, setLoading] = useState();
+  const location = useLocation();
 
   // Detect route changes and trigger loader
   useEffect(() => {
@@ -21,21 +23,22 @@ function App() {
     // Simulate async route loading or component mounting delay
     const timer = setTimeout(() => {
       setLoading(false); // Stop loading after content is ready (e.g., after a delay)
-    }, 1000); 
+    }, 1000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, [location]); // Runs every time the route changes
 
   return (
     <OperatorContextProvider>
-      
+
       {/* Show loader if loading is true */}
       {loading ? <Loader /> : (
         <Routes>
-          <Route exact path='/' element={<Welcome />} />
+          <Route exact path='/' element={<Signup />} />
 
           <Route exact path='/requests' element={<UserRequestPage />} />
-
+          <Route path='/signin' element={<SigninOperator />} />
+          <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/operator'>
             <Route index element={<SigninOperator />} />
 
