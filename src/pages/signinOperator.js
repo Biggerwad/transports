@@ -9,7 +9,7 @@ function SigninOperator() {
   const { setUserInfo, loader, setLoader } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    // password: ''
   });
 
   const onSubmit = async (e) => {
@@ -17,7 +17,8 @@ function SigninOperator() {
     setLoader(true)
 
     await loginOperator(formData.email).then((data) => {
-      if (data.success) {  // Check if data exists and if there's no error
+      if (data) { 
+
         // Populating user container
         setUserInfo(data.operator);
         setLoader(false);
@@ -93,13 +94,7 @@ function SigninOperator() {
         </form>
 
         <div className='my-2 text-center'>
-
-          {/* <button className="text-white bg-blue-700 
-          hover:bg-blue-800 focus:outline-none 
-          focus:ring-blue-300 font-medium rounded-lg text-sm 
-          w-full px-5 py-2.5 text-center dark:bg-blue-600 
-          dark:hover:bg-blue-700 dark:focus:ring-blue-800">Reset password</button> */}
-
+          
           <Link to="/">
             <button>
               Don't have an account? <br />
@@ -108,7 +103,6 @@ function SigninOperator() {
           </Link>
           
           <br /> <br />
-
 
           <Link to="/forgotpassword">
             <button>Forgot Password?</button>

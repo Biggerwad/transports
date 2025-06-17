@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../hooks/OperatorContext'
-import { loginOperator } from '../../hooks/https';
+import { loginOperator, signupAdmin } from '../../hooks/https';
 import Loader from '../../components/Loader';
 import SigninOperator from '../signinOperator';
 
@@ -9,7 +9,7 @@ function Signup() {
     const navigate = useNavigate();
     const { setUserInfo, loader, setLoader } = useContext(UserContext);
     const [formData, setFormData] = useState({
-        // userName: '', will implement username later
+        hostName: '',
         email: '',
         password: ''
     });
@@ -19,7 +19,7 @@ function Signup() {
         setLoader(true)
 
         // This logic will be moved to utils
-        await loginOperator(formData.email).then((data) => {
+        await signupAdmin(formData.hostName, formData.email, formData.password).then((data) => {
             if (data.success) {  // Check if data exists and if there's no error
                 // Populating user container
                 setUserInfo(data.operator);

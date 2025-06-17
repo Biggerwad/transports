@@ -111,6 +111,28 @@ async function loginOperator(email) {
     }
 }
 
+async function signupAdmin({ hostName, email, password }) {
+    try {
+        const req = await fetch(`${API}/signup`, {
+            method: "POST",
+            body: JSON.stringify({ hostName, email, password }),
+            headers: {
+                'Content-Type': "application-json"
+            }
+        })
+
+        if (!req) {
+            return req.json()
+        }
+
+        const data = await req.json()
+        return data;
+    } catch (err) {
+        console.log("Error", err)
+        return err
+    }
+}
+
 
 // Get all operators
 async function getAllOperators() {
@@ -210,6 +232,7 @@ export {
     deleteRequest,
     getAllContainers,
     loginOperator,
+    signupAdmin,
     getAllOperators,
     addOperator,
     modifyOperator,
