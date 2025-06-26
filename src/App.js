@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import UserRequestPage from './pages/userRequestPage';
 import SigninOperator from './pages/signinOperator';
@@ -54,6 +54,7 @@ function App() {
               </ProtectedRoute>
             } />
           </Route>
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       )}
     </OperatorContextProvider>
