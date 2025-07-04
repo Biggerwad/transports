@@ -113,7 +113,7 @@ async function loginOperator(email) {
 
 async function signupAdmin({ hostName, email, password }) {
     try {
-        const req = await fetch(`${API}/signup`, {
+        const req = await fetch(`${API}/operator/signup`, {
             method: "POST",
             body: JSON.stringify({ hostName, email, password }),
             headers: {
