@@ -111,15 +111,15 @@ async function loginOperator(email) {
     }
 }
 
-async function signupAdmin({ hostName, email, password }) {
+async function signupAdmin({ username, email, password }) {
     try {
         const req = await fetch(`${API}/operator/signup`, {
             method: "POST",
-            body: JSON.stringify({ hostName, email, password }),
+            body: JSON.stringify({ username, email, password }),
             headers: {
                 'Content-Type': "application-json"
             }
-        })
+        });
 
         if (!req) {
             return req.json()
@@ -127,6 +127,7 @@ async function signupAdmin({ hostName, email, password }) {
 
         const data = await req.json()
         return data;
+
     } catch (err) {
         console.log("Error", err)
         return err

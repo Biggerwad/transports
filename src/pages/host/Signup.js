@@ -19,7 +19,8 @@ function Signup() {
         setLoader(true)
 
         // This logic will be moved to utils
-        await signupAdmin(formData.username, formData.email, formData.password).then((data) => {
+        await signupAdmin(formData).then((data) => {
+            
             if (data.ok) {  // Check if data exists and if there's no error
                 // Populating user container
                 setUserInfo(data.operator);
