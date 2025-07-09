@@ -25,7 +25,7 @@ function Viewrequests() {
 
   useEffect(() => {
     getCurrentLocation();
-    
+
     getAllRequests()
       .then(allRequests => {
         setRequests(allRequests);
@@ -190,6 +190,11 @@ function Viewrequests() {
     console.log(`ERROR(${err.code}): ${err.message}`);
   }
 
+  function genFormId()  {
+    const formId = Math.floor((Math.random() * 1000000) + 7000000)
+    return formId;
+  };
+
   return (
     <>
       {loading ? <Loader /> :
@@ -241,6 +246,10 @@ function Viewrequests() {
               }
             </div>
           )}
+
+          {/* Copy Form URL */}
+          <p>your form url is: requests/{userInfo.hostId}?hostID={genFormId()}</p>
+
         </div>}
     </>
   );

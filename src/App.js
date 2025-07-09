@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import UserRequestPage from './pages/userRequestPage';
 import SigninOperator from './pages/signinOperator';
@@ -14,6 +14,7 @@ import Signup from './pages/host/Signup';
 
 function App() {
   const [loading, setLoading] = useState();
+  const { hostId, formId } = useParams();
   const location = useLocation();
 
   // Detect route changes and trigger loader
@@ -36,7 +37,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Signup />} />
 
-          <Route exact path='/requests' element={<UserRequestPage />} />
+          <Route exact path='/requests/:hostId/:formId' element={<UserRequestPage hostId={hostId} formId={formId} />} />
           <Route path='/signin' element={<SigninOperator />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/operator'>

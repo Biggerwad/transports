@@ -9,7 +9,7 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 const apiEndpoint = process.env.BE_API;
 
 // This is the user form to register requests.
-function UserRequestPage() {
+function UserRequestPage({hostId, formId}) {
     const navigate = useNavigate()
     const inputref = useRef(null)
 
@@ -37,14 +37,15 @@ function UserRequestPage() {
 
     useEffect(() => {
         // Get form status
-        getFormStatus()
+        getFormStatus({hostId, formId})
             .then((res) => {
                 setFormStatus(res[0].status)
                 setIsLoading(false);
             })
             .catch(err => console.log(err))
     }, [])
-
+    
+    // alert(hostId)
     const { service, fullName, phone, numOfPersons, address, geolocation, feedback } = formData;
 
     const onChange = (e) => {
@@ -65,7 +66,7 @@ function UserRequestPage() {
 
         // If validation passes, you can submit the form
         // API endpoint to send data to
-        
+
         try {
             const response = await fetch(apiEndpoint, {
                 method: 'POST',

@@ -39,9 +39,9 @@ async function deleteRequest(reqId, setRequests) {
 
 //Updated
 
-async function getFormStatus() {
+async function getFormStatus({hostId, formId}) {
     try {
-        const data = await fetch(`${API}/operator/formstatus/`);
+        const data = await fetch(`${API}/operator/formstatus?hostId=${hostId}&formId=${formId}`);
 
         if (!data) {
             throw new Error('Failed to fetch form Status');
