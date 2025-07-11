@@ -9,8 +9,8 @@ import { getAllRequests, getFormStatus, httpsetFormStatus } from '../hooks/https
 import OperatorView from '../components/operator/OperatorView';
 import Loader from '../components/Loader';
 
-
 const API_KEY = process.env.REACT_APP_API_KEY;
+const FE_API = process.env.FRONTEND_API;
 
 function Viewrequests() {
   const [uniqueGeolocations, setUniqueGeolocations] = useState([]);
@@ -190,6 +190,12 @@ function Viewrequests() {
     console.log(`ERROR(${err.code}): ${err.message}`);
   }
 
+  // MAKE THIS GENERATED ONLY WHEN ADMIN creates a new form, i.e this is run-once
+  function genFormId()  {
+    const formId = Math.floor((Math.random() * 1000000) + 7000000)
+    return formId;
+  };
+
   return (
     <>
       {loading ? <Loader /> :
@@ -241,6 +247,11 @@ function Viewrequests() {
               }
             </div>
           )}
+
+          {/* Copy Form URL */}
+          <p>`Your form url is: ${FE_API}/{userInfo.hostId}/{userInfo.formId}`</p>
+          {/* ADD A COPY BUTTON TO SHARE WITH MEMBERS */}
+
         </div>}
     </>
   );

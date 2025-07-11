@@ -36,7 +36,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Signup />} />
 
-          <Route exact path='/requests' element={<UserRequestPage />} />
+          <Route exact path='/requests/:hostId/:formId' element={<UserRequestPage/>} />
           <Route path='/signin' element={<SigninOperator />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/operator'>

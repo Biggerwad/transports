@@ -41,10 +41,11 @@ async function deleteRequest(reqId, setRequests) {
 
 async function getFormStatus() {
     try {
-        const data = await fetch(`${API}/operator/formstatus/`);
+        const data = await fetch(`${API}/operator/formstatus/${hostId}/${formId}`);
 
         if (!data) {
-            throw new Error('Failed to fetch form Status');
+            return false;
+            // throw new Error('Failed to fetch form Status');
         }
 
         return data.json();
