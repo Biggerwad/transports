@@ -134,6 +134,28 @@ async function signupAdmin({ hostName, email, password }) {
     }
 }
 
+// password reset from FE
+// async function resetRequest({ hostName, email, password }) {
+//     try {
+//         const req = await fetch(`${API}/signup`, {
+//             method: "POST",
+//             body: JSON.stringify({ hostName, email, password }),
+//             headers: {
+//                 'Content-Type': "application-json"
+//             }
+//         })
+
+//         if (!req) {
+//             return req.json()
+//         }
+
+//         const data = await req.json()
+//         return data;
+//     } catch (err) {
+//         console.log("Error", err)
+//         return err
+//     }
+// }
 
 // Get all operators
 async function getAllOperators() {

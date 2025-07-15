@@ -39,6 +39,7 @@ function App() {
           <Route exact path='/requests/:hostId/:formId' element={<UserRequestPage/>} />
           <Route path='/signin' element={<SigninOperator />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
+          <Route path='/resetpassword' element={<ForgotPassword />} />
           <Route path='/operator'>
             <Route index element={<SigninOperator />} />
 

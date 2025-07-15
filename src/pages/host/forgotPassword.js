@@ -7,6 +7,7 @@ function ForgotPassword() {
         e.preventDefault()
 
         // send this for processing with extra verification
+        // use link reset for now: jwt is needed
     }
 
     return (
