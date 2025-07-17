@@ -39,7 +39,7 @@ async function deleteRequest(reqId, setRequests) {
 
 //Updated
 
-async function getFormStatus() {
+async function getFormStatus({ hostId, formId }) {
     try {
         const data = await fetch(`${API}/operator/formstatus/${hostId}/${formId}`);
 
@@ -53,7 +53,7 @@ async function getFormStatus() {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 async function httpsetFormStatus(status) {
     try {
@@ -112,14 +112,15 @@ async function loginOperator(email) {
     }
 }
 
-async function signupAdmin({ hostName, email, password }) {
+async function signupAdmin(username, email, password) {
     try {
-        const req = await fetch(`${API}/signup`, {
+        const req = await fetch(`${API}/operator/signup`, {
             method: "POST",
-            body: JSON.stringify({ hostName, email, password }),
+            body: JSON.stringify({ username: username, email: email, password: password }),
             headers: {
-                'Content-Type': "application-json"
-            }
+                'Content-Type': "application/json"
+            },
+            credentials: 'include',
         })
 
         if (!req) {

@@ -32,9 +32,10 @@ function Viewrequests() {
         const destinationAddresses = allRequests.map(req => req.address);
         setDestinations(destinationAddresses);
 
-        getFormStatus()
+        // Get that form's status
+        getFormStatus({hostId:userInfo.hostId, formId: userInfo.formId})
           .then(res => {
-            setShowForm(res[0].status);
+            setShowForm(res.status);
             setLoading(false);
           });
       })
