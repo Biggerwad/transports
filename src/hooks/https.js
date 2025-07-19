@@ -89,23 +89,24 @@ async function getAllContainers() {
 }
 
 // Login Operator
-async function loginOperator(email, password) {
+async function loginOperator({email, password, type, hostId}) {
     try {
         const res = await fetch(`${API}/operator`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password, opType:type, hostId }),
             credentials: 'include',
         });
 
         if (!res.ok) {
             return res.json();
-        }
+        };
 
         const data = await res.json();
         return data;
+
     } catch (err) {
         console.log(err);
         return { error: "An error occurred while logging in" }; // Return an error object
@@ -164,7 +165,7 @@ async function resetRequest({ hostName, email, password }) {
 // password reset from FE
 async function resetPassword({ token, password }) {
     try {
-        
+
         const req = await fetch(`${API}/operator/resetpassword`, {
             method: "POST",
             body: JSON.stringify({ token, password }),
@@ -187,9 +188,9 @@ async function resetPassword({ token, password }) {
 }
 
 // Get all operators
-async function getAllOperators() {
+async function getAllOperators(hostId) {
     try {
-        const res = await fetch(`${API}/operator/`);
+        const res = await fetch(`${API}/operator/hostId`);
         const data = await res.json();
         return data;
     } catch (err) {

@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { UserContext } from '../hooks/OperatorContext';
 import { loginOperator } from '../hooks/https';
 import Loader from '../components/Loader';
 
-function SigninOperator() {
+function SigninOperator({ type }) {
   const navigate = useNavigate();
+  const { hostId } = useParams();
   const { setUserInfo, loader, setLoader } = useContext(UserContext);
   const [formData, setFormData] = useState({
+    type: type,
     email: '',
     password: ''
   });
@@ -16,7 +18,12 @@ function SigninOperator() {
     e.preventDefault();
     setLoader(true)
 
-    await loginOperator(formData.email, formData.password).then((data) => {
+    await loginOperator({
+      email: formData.email,
+      password: formData.type === "Operator" ? formData.password : "",
+      hostId: formData.type === "Operator" ? hostId : "",
+      type: formData.type
+    }).then((data) => {
       if (data) {
         console.log(data)
         // Populating user container
@@ -45,7 +52,7 @@ function SigninOperator() {
       {/* {!loader ? */}
       <div id='login' className='max-w-sm py-5'>
 
-        <h3 className='font-400 text-center my-2 font-bold'>Login</h3>
+        <h3 className='font-400 text-center my-2 font-bold'>{type} Login</h3>
 
         <form className="" onSubmit={onSubmit}>
 

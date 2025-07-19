@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { getAllOperators } from '../../hooks/https';
 import { FaUserEdit } from "react-icons/fa";
 
 function Edituser({ setOperatorToEdit, setActive }) {
   const [operators, setOperators] = useState([]);
+  const {userInfo, setUserInfo} = useContext(userInfo);
 
   // Fetch operators when component mounts
   useEffect(() => {
-    getAllOperators().then((data) => {
+    // pass hostId here
+    getAllOperators(userInfo.hostId).then((data) => {
       setOperators(data);
     });
   }, []);

@@ -36,7 +36,15 @@ function App() {
       {/* Show loader if loading is true */}
       {loading ? <Loader /> : (
         <Routes>
+          {/* welcome page for operators */}
+          {/* welcome page */}
           <Route exact path='/' element={<SigninOperator />} />
+
+          {/* host signin */}
+          <Route exact path='/host' element={<SigninOperator type={"Host"} />} />
+
+          {/* Admin/operator signin */}
+          <Route exact path='/:hostId' element={<SigninOperator type={"Operator"} />} />
 
           <Route exact path='/requests/:hostId/:formId' element={<UserRequestPage />} />
           <Route path='/signup' element={<Signup />} />
