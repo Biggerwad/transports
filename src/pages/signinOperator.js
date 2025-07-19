@@ -9,18 +9,19 @@ function SigninOperator() {
   const { setUserInfo, loader, setLoader } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: '',
-    // password: ''
+    password: ''
   });
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoader(true)
 
-    await loginOperator(formData.email).then((data) => {
-      if (data) { 
-
+    await loginOperator(formData.email, formData.password).then((data) => {
+      if (data) {
+        console.log(data)
         // Populating user container
         setUserInfo(data.operator);
+        // don't send operator sensitive data to FE.
         setLoader(false);
         navigate('/operator/viewrequests/');
       } else {
@@ -38,19 +39,6 @@ function SigninOperator() {
       [e.target.id]: e.target.value,
     })
   }
-
-  /**
-   * This page will be refined to contain login and signup for operator
-   * How:
-   * 1. Church rep login.
-   * |
-   * |--> Signup --> Login --> Reset password
-   * |
-   * |--> Email, username and password
-   * |
-   * |--> Dashboard -> view requests
-   * 
-   */
 
   return (
     <>
@@ -94,14 +82,14 @@ function SigninOperator() {
         </form>
 
         <div className='my-2 text-center'>
-          
-          <Link to="/">
+
+          <Link to="/signup">
             <button>
               Don't have an account? <br />
               Signup
             </button>
           </Link>
-          
+
           <br /> <br />
 
           <Link to="/forgotpassword">

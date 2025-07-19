@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { getFormStatus } from '../hooks/https';
 import { useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api'
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +13,7 @@ const apiEndpoint = process.env.BE_API;
 function UserRequestPage({hostId, formId}) {
     const navigate = useNavigate()
     const inputref = useRef(null)
+    const { hostId, formId } = useParams();
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -37,12 +39,19 @@ function UserRequestPage({hostId, formId}) {
 
     useEffect(() => {
         // Get form status
-        getFormStatus({hostId, formId})
+        getFormStatus({ hostId, formId })
             .then((res) => {
-                setFormStatus(res[0].status)
-                setIsLoading(false);
-            })
-            .catch(err => console.log(err))
+                console.log(res);
+                if (!res.ok) {
+                    alert("Opps link broken!");
+                    setIsLoading(false);
+                } else {
+                    // see why there is a re-render for alert
+                    alert(res.owner);
+                    setFormStatus(res.status);
+                    setIsLoading(false);
+                }
+            }).catch(err => console.log(err.message));
     }, [])
     
     // alert(hostId)

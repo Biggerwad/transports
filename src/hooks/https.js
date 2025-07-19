@@ -39,12 +39,13 @@ async function deleteRequest(reqId, setRequests) {
 
 //Updated
 
-async function getFormStatus({hostId, formId}) {
+async function getFormStatus({ hostId, formId }) {
     try {
-        const data = await fetch(`${API}/operator/formstatus?hostId=${hostId}&formId=${formId}`);
+        const data = await fetch(`${API}/operator/formstatus/${hostId}/${formId}`);
 
         if (!data) {
-            throw new Error('Failed to fetch form Status');
+            return false;
+            // throw new Error('Failed to fetch form Status');
         }
 
         return data.json();
@@ -52,7 +53,7 @@ async function getFormStatus({hostId, formId}) {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 async function httpsetFormStatus(status) {
     try {
@@ -88,14 +89,14 @@ async function getAllContainers() {
 }
 
 // Login Operator
-async function loginOperator(email) {
+async function loginOperator(email, password) {
     try {
         const res = await fetch(`${API}/operator`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email }),
+            body: JSON.stringify({ email, password }),
             credentials: 'include',
         });
 
@@ -111,15 +112,16 @@ async function loginOperator(email) {
     }
 }
 
-async function signupAdmin({ username, email, password }) {
+async function signupAdmin(username, email, password) {
     try {
         const req = await fetch(`${API}/operator/signup`, {
             method: "POST",
-            body: JSON.stringify({ username, email, password }),
+            body: JSON.stringify({ username: username, email: email, password: password }),
             headers: {
-                'Content-Type': "application-json"
-            }
-        });
+                'Content-Type': "application/json"
+            },
+            credentials: 'include',
+        })
 
         if (!req) {
             return req.json()
@@ -134,6 +136,55 @@ async function signupAdmin({ username, email, password }) {
     }
 }
 
+// password reset from FE
+async function resetRequest({ hostName, email, password }) {
+    try {
+        const req = await fetch(`${API}/operator/resetrequest`, {
+            method: "POST",
+            body: JSON.stringify({ email }),
+            headers: {
+                'Content-Type': "application/json"
+            },
+            credentials: 'include',
+        })
+
+        if (!req) {
+            return req.json()
+        }
+
+        const data = await req.json()
+        return data;
+    } catch (err) {
+        console.log("Error", err)
+        return err
+    }
+}
+
+
+// password reset from FE
+async function resetPassword({ token, password }) {
+    try {
+        
+        const req = await fetch(`${API}/operator/resetpassword`, {
+            method: "POST",
+            body: JSON.stringify({ token, password }),
+            headers: {
+                'Content-Type': "application/json"
+            },
+            credentials: 'include',
+        })
+
+        if (!req) {
+            return req.json()
+        }
+
+        const data = await req.json()
+        return data;
+    } catch (err) {
+        console.log("Error", err)
+        return err
+    }
+}
 
 // Get all operators
 async function getAllOperators() {
@@ -236,6 +287,8 @@ export {
     signupAdmin,
     getAllOperators,
     addOperator,
+    resetRequest,
+    resetPassword,
     modifyOperator,
     assignOperator,
     updateRequest,
