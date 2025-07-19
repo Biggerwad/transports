@@ -101,7 +101,6 @@ function Viewrequests() {
     }
 
 
-    // Constructor error begins here 
     const service = new window.google.maps.DistanceMatrixService();
 
     if (!origin || origin.length === 0) {

@@ -10,7 +10,7 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 const apiEndpoint = process.env.BE_API;
 
 // This is the user form to register requests.
-function UserRequestPage({hostId, formId}) {
+function UserRequestPage() {
     const navigate = useNavigate()
     const inputref = useRef(null)
     const { hostId, formId } = useParams();

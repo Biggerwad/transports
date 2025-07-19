@@ -100,7 +100,7 @@ async function loginOperator(email, password) {
             credentials: 'include',
         });
 
-        if (!res) {
+        if (!res.ok) {
             return res.json();
         }
 
@@ -110,7 +110,7 @@ async function loginOperator(email, password) {
         console.log(err);
         return { error: "An error occurred while logging in" }; // Return an error object
     }
-}
+};
 
 async function signupAdmin(username, email, password) {
     try {
