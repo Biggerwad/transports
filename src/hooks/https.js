@@ -89,14 +89,14 @@ async function getAllContainers() {
 }
 
 // Login Operator
-async function loginOperator(email) {
+async function loginOperator(email, password) {
     try {
         const res = await fetch(`${API}/operator`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email }),
+            body: JSON.stringify({ email, password }),
             credentials: 'include',
         });
 
@@ -136,27 +136,54 @@ async function signupAdmin(username, email, password) {
 }
 
 // password reset from FE
-// async function resetRequest({ hostName, email, password }) {
-//     try {
-//         const req = await fetch(`${API}/signup`, {
-//             method: "POST",
-//             body: JSON.stringify({ hostName, email, password }),
-//             headers: {
-//                 'Content-Type': "application-json"
-//             }
-//         })
+async function resetRequest({ hostName, email, password }) {
+    try {
+        const req = await fetch(`${API}/operator/resetrequest`, {
+            method: "POST",
+            body: JSON.stringify({ email }),
+            headers: {
+                'Content-Type': "application/json"
+            },
+            credentials: 'include',
+        })
 
-//         if (!req) {
-//             return req.json()
-//         }
+        if (!req) {
+            return req.json()
+        }
 
-//         const data = await req.json()
-//         return data;
-//     } catch (err) {
-//         console.log("Error", err)
-//         return err
-//     }
-// }
+        const data = await req.json()
+        return data;
+    } catch (err) {
+        console.log("Error", err)
+        return err
+    }
+}
+
+
+// password reset from FE
+async function resetPassword({ token, password }) {
+    try {
+        
+        const req = await fetch(`${API}/operator/resetpassword`, {
+            method: "POST",
+            body: JSON.stringify({ token, password }),
+            headers: {
+                'Content-Type': "application/json"
+            },
+            credentials: 'include',
+        })
+
+        if (!req) {
+            return req.json()
+        }
+
+        const data = await req.json()
+        return data;
+    } catch (err) {
+        console.log("Error", err)
+        return err
+    }
+}
 
 // Get all operators
 async function getAllOperators() {
@@ -259,6 +286,8 @@ export {
     signupAdmin,
     getAllOperators,
     addOperator,
+    resetRequest,
+    resetPassword,
     modifyOperator,
     assignOperator,
     updateRequest,

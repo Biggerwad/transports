@@ -2,15 +2,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../hooks/OperatorContext';
 import List from '../components/admin/List';
+// import { configDotenv } from 'dotenv';
 import { FaRegAddressBook } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 import { getAllRequests, getFormStatus, httpsetFormStatus } from '../hooks/https';
 import OperatorView from '../components/operator/OperatorView';
 import Loader from '../components/Loader';
-
+// configDotenv();
 const API_KEY = process.env.REACT_APP_API_KEY;
-const FE_API = process.env.FRONTEND_API;
+// const FE_API = process.env.FE_API;
+const FE_API = "http://localhost:3000";
 
 function Viewrequests() {
   const [uniqueGeolocations, setUniqueGeolocations] = useState([]);
@@ -25,7 +27,7 @@ function Viewrequests() {
 
   useEffect(() => {
     getCurrentLocation();
-    
+
     getAllRequests()
       .then(allRequests => {
         setRequests(allRequests);
@@ -33,7 +35,7 @@ function Viewrequests() {
         setDestinations(destinationAddresses);
 
         // Get that form's status
-        getFormStatus({hostId:userInfo.hostId, formId: userInfo.formId})
+        getFormStatus({ hostId: userInfo.hostId, formId: userInfo.formId })
           .then(res => {
             setShowForm(res.status);
             setLoading(false);
@@ -192,7 +194,7 @@ function Viewrequests() {
   }
 
   // MAKE THIS GENERATED ONLY WHEN ADMIN creates a new form, i.e this is run-once
-  function genFormId()  {
+  function genFormId() {
     const formId = Math.floor((Math.random() * 1000000) + 7000000)
     return formId;
   };
@@ -250,7 +252,7 @@ function Viewrequests() {
           )}
 
           {/* Copy Form URL */}
-          <p>`Your form url is: ${FE_API}/{userInfo.hostId}/{userInfo.formId}`</p>
+          <p>{`Your form url is: ${FE_API}/${userInfo.hostId}/${userInfo.formId}`}</p>
           {/* ADD A COPY BUTTON TO SHARE WITH MEMBERS */}
 
         </div>}

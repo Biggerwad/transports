@@ -1,13 +1,25 @@
 import React, { useState } from 'react'
+import { resetRequest } from '../../hooks/https'
 
 function ForgotPassword() {
     const [email, setEmail] = useState('')
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
+
+        await resetRequest({ email }).then((res) => {
+            if (res.ok) {
+                alert('reset link sent!');
+            }
+        }).catch((err) => {
+            alert("Unable to send reset link")
+        })
 
         // send this for processing with extra verification
         // use link reset for now: jwt is needed
+
+        // Forgot password
+
     }
 
     return (

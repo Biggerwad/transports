@@ -11,6 +11,7 @@ import Loader from './components/Loader';
 import ForgotPassword from './pages/host/forgotPassword';
 import Welcome from './pages/Welcome';
 import Signup from './pages/host/Signup';
+import ResetPassword from './pages/host/resetPassword';
 
 function App() {
   const [loading, setLoading] = useState();
@@ -34,12 +35,12 @@ function App() {
       {/* Show loader if loading is true */}
       {loading ? <Loader /> : (
         <Routes>
-          <Route exact path='/' element={<Signup />} />
+          <Route exact path='/' element={<SigninOperator />} />
 
-          <Route exact path='/requests/:hostId/:formId' element={<UserRequestPage/>} />
-          <Route path='/signin' element={<SigninOperator />} />
+          <Route exact path='/requests/:hostId/:formId' element={<UserRequestPage />} />
+          <Route path='/signup' element={<Signup />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
-          <Route path='/resetpassword' element={<ForgotPassword />} />
+          <Route path='/resetpassword/:token' element={<ResetPassword />} />
           <Route path='/operator'>
             <Route index element={<SigninOperator />} />
 
