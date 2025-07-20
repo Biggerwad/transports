@@ -38,7 +38,7 @@ function App() {
         <Routes>
           {/* welcome page for operators */}
           {/* welcome page */}
-          <Route exact path='/' element={<SigninOperator />} />
+          <Route exact path='/' element={<Welcome />} />
 
           {/* host signin */}
           <Route exact path='/host' element={<SigninOperator type={"Host"} />} />

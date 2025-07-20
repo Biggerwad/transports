@@ -34,11 +34,16 @@ function Viewrequests() {
         const destinationAddresses = allRequests.map(req => req.address);
         setDestinations(destinationAddresses);
 
+        console.log(userInfo);
         // Get that form's status
         getFormStatus({ hostId: userInfo.hostId, formId: userInfo.formId })
           .then(res => {
-            setShowForm(res.status);
-            setLoading(false);
+            if (res) {
+              setShowForm(res.status);
+              setLoading(false);
+            } else {
+              alert('unable to get form status');
+            }
           });
       })
       .catch(err => console.log(err));
@@ -141,7 +146,7 @@ function Viewrequests() {
 
   const logoutUser = () => {
     setUserInfo(null);
-    navigate('/operator');
+    navigate(-1);
   };
 
   const handleFormStatusToggle = () => {
