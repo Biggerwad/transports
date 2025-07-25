@@ -8,14 +8,17 @@ Logic of thus feature
 - On assigning operator, update the container
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Requests from '../operator/Requests';
-import { getAllOperators, getAllContainers, assignOperator } from '../../hooks/https';
+import { getAllContainers, assignOperator } from '../../hooks/https';
+import { UserContext } from '../../hooks/OperatorContext';
 
 function List({ geoLoc, data, status, total }) {
     const [operators, setOperators] = useState([]);
     const [exactOperator, setExactOperator] = useState(null);
     const [container, setContainer] = useState([]);
+    const {userInfo} = useContext(UserContext);
+
     const [selectedOperatorId, setSelectedOperatorId] = useState(null);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false); // For toggling dropdown visibility
 
@@ -23,7 +26,7 @@ function List({ geoLoc, data, status, total }) {
     useEffect(() => {
         const fetchOperatorsAndContainers = async () => {
             try {
-                const operatorsData = await getAllOperators();
+                const operatorsData = userInfo.operators;
                 setOperators(operatorsData || []);
 
                 const containersData = await getAllContainers();

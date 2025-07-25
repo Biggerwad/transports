@@ -12,6 +12,7 @@ import ForgotPassword from './pages/host/forgotPassword';
 import Welcome from './pages/Welcome';
 import Signup from './pages/host/Signup';
 import ResetPassword from './pages/host/resetPassword';
+import Confirm from './pages/host/confPage';
 
 function App() {
   const [loading, setLoading] = useState();
@@ -42,6 +43,7 @@ function App() {
 
           {/* host signin */}
           <Route exact path='/host' element={<SigninOperator type={"Host"} />} />
+          <Route exact path='/confirm/:actToken' element={<Confirm />} />
 
           {/* Admin/operator signin */}
           <Route exact path='/:hostId' element={<SigninOperator type={"Operator"} />} />

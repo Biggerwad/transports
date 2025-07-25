@@ -12,6 +12,7 @@ function Signup() {
         username: '',
         email: '',
         password: ''
+        // agrees to terms and conditions
     });
 
     const onSubmit = async (e) => {
@@ -19,18 +20,24 @@ function Signup() {
         setLoader(true);
 
         // This logic will be moved to utils
-        await signupAdmin(formData.username, formData.email, formData.password).then((data) => {
+        await signupAdmin({ username: formData.username, email: formData.email, password: formData.password }).then((data) => {
             console.log(data);
             if (data.ok) {  // Check if data exists and if there's no error
                 // Populating user container
-                
-                setUserInfo(data);
+
+                setFormData({
+                    username: '',
+                    email: '',
+                    password: ''
+                });
+
                 setLoader(false);
                 alert("success!")
-                navigate('/operator/viewrequests');
+                alert('Confirmation link has been sent!');
+                // navigate('/operator/viewrequests');
             } else {
                 // Display the error message if available
-                alert(data.data);
+                alert(data);
                 setLoader(false);
             }
         });
@@ -64,7 +71,7 @@ function Signup() {
                 <h3 className='font-400 text-center my-2 font-bold'>Host Signup</h3>
 
                 <form className="" onSubmit={onSubmit}>
-                    
+
                     {/* username */}
                     <div className="mb-5 max-w-sm">
                         <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>

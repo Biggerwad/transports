@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../hooks/OperatorContext';
 import List from '../components/admin/List';
 // import { configDotenv } from 'dotenv';
+import { useParams } from 'react-router-dom';
 import { FaRegAddressBook } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
@@ -23,17 +24,20 @@ function Viewrequests() {
   const [addressAndDistance, setAddressAndDistance] = useState([]);
   const { userInfo, setUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
+  const { hostId } = useParams();
   const [loading, setLoading] = useState(true);
 
+  // GIVE THIS EFFECT A DEPENDENCY ARRAY
   useEffect(() => {
     getCurrentLocation();
 
-    getAllRequests()
+    getAllRequests(hostId)
       .then(allRequests => {
         setRequests(allRequests);
         const destinationAddresses = allRequests.map(req => req.address);
         setDestinations(destinationAddresses);
 
+        // 
         console.log(userInfo);
         // Get that form's status
         getFormStatus({ hostId: userInfo.hostId, formId: userInfo.formId })
@@ -211,6 +215,8 @@ function Viewrequests() {
             <button className='absolute top-0 left-0 block' onClick={logoutUser}>
               <TbLogout2 size={30} color='red' />
             </button>
+            {console.log(userInfo)}
+
             {userInfo?.privilege === 'Admin' && (
               <button className='absolute top-0 right-0 block p-1 rounded-lg' onClick={() => navigate('/operator/modify/')}>
                 <FaRegAddressBook size={30} />
@@ -219,6 +225,7 @@ function Viewrequests() {
           </div>
 
           <span style={styleGetCurrentLocation()} className='rounded-sm text-center max-w-sm mx-auto my-2 bg-green-500' onClick={getCurrentLocation}><b>Refresh</b></span>
+
           {/* Display request data */}
           {userInfo && requests?.length > 0 ? (
             userInfo?.privilege === 'Admin' ? (
@@ -256,7 +263,7 @@ function Viewrequests() {
           )}
 
           {/* Copy Form URL */}
-          <p>{`Your form url is: ${FE_API}/${userInfo.hostId}/${userInfo.formId}`}</p>
+          <p>{`Your form url is: ${FE_API}/requests/${userInfo.hostId}/${userInfo.formId}`}</p>
           {/* ADD A COPY BUTTON TO SHARE WITH MEMBERS */}
 
         </div>}

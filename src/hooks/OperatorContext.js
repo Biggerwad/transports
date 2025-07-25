@@ -9,12 +9,15 @@ export default function OperatorContextProvider({ children }) {
     const [userInfo, setUserInfo] = useState(() => {
         // Check if userInfo is already in localStorage
         const storedUserInfo = localStorage.getItem('userInfo');
+        
+        // convert to json or set as null
         return storedUserInfo ? JSON.parse(storedUserInfo) : null;
     });
 
     // Whenever userInfo changes, update localStorage
     useEffect(() => {
-        if (userInfo) {
+        // no userInfo in LS, store 
+        if (!userInfo) {
             localStorage.setItem('userInfo', JSON.stringify(userInfo));
         } else {
             localStorage.removeItem('userInfo'); // Cleanup when logged out

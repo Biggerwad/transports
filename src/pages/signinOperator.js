@@ -52,7 +52,7 @@ function SigninOperator({ type }) {
     <>
       {/* {!loader ? */}
       <div id='login' className='max-w-sm py-5'>
-        
+
         <div onClick={() => navigate(-1)}>
           {/* Return button */}
           <IoChevronBackCircleOutline size={35} />

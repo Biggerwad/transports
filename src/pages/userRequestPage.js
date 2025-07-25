@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 
 const logo = process.env.MY_PUBLIC_URL + '/ppplogo.jpg';
-const API_KEY = process.env.REACT_APP_API_KEY;
-const apiEndpoint = process.env.BE_API;
+const API_KEY = process.env.REACT_APP_API_ADDRESS;
 
 // This is the user form to register requests.
 function UserRequestPage() {
@@ -53,7 +52,7 @@ function UserRequestPage() {
                 }
             }).catch(err => console.log(err.message));
     }, [])
-    
+
     // alert(hostId)
     const { service, fullName, phone, numOfPersons, address, geolocation, feedback } = formData;
 
@@ -77,29 +76,31 @@ function UserRequestPage() {
         // API endpoint to send data to
 
         try {
-            const response = await fetch(apiEndpoint, {
+            const response = await fetch(`${API_KEY}/requests/${hostId}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'content-Type': 'application/json',
                 },
+                credentials: 'include',                
                 body: JSON.stringify(formData), // Send formData as a JSON object
             });
 
             const data = await response.json();
 
-            if (data.ok) {
+            if (data) {
                 // Handle success (e.g., show success message)
                 console.log(data);
                 console.log('Form submitted successfully:', data);
                 setShowForm(!showForm);
             } else {
+                console.log(data)
                 // Handle error (e.g., show error message)
                 console.error('Error submitting form:', data);
                 console.log(data.message);
             }
         } catch (error) {
-            console.error('Error sending form data:', error);
-            alert("Unable to submit your request, please ensure you provide accurate information.");
+            console.error('Error sending form data:', error.message);
+            alert("Unable to submit your request");
         }
 
     };

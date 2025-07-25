@@ -14,6 +14,7 @@ function OperatorForm({ setActive, operator }) {
   useEffect(() => {
     if (operator) {
       setFormdata({
+        hostId: operator.hostId || '', 
         id: operator._id || '',
         fullName: operator.fullName || '',
         email: operator.email || '',

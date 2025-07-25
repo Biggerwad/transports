@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { getAllOperators } from '../../hooks/https';
+// import { getAllOperators } from '../../hooks/https';
 import { FaUserEdit } from "react-icons/fa";
 import OperatorContextProvider, { UserContext } from '../../hooks/OperatorContext';
 
@@ -10,9 +10,9 @@ function Edituser({ setOperatorToEdit, setActive }) {
   // Fetch operators when component mounts
   useEffect(() => {
     // pass hostId here
-    getAllOperators(userInfo.hostId).then((data) => {
-      setOperators(data);
-    });
+    // getAllOperators(userInfo.hostId).then((data) => {
+      setOperators(userInfo.operators);
+    // });
   }, []);
 
   const editOperator = (operator) => {

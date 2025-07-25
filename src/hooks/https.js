@@ -1,8 +1,8 @@
 const API = process.env.REACT_APP_API_ADDRESS;
 
-async function getAllRequests() {
+async function getAllRequests(hostId) {
     try {
-        const res = await fetch(`${API}/requests/`);
+        const res = await fetch(`${API}/requests/${hostId}`);
         const data = await res.json();
         return data;
     } catch (err) {
@@ -88,15 +88,31 @@ async function getAllContainers() {
     }
 }
 
+// Verify Tokens
+async function tokenVerif(token) {
+    try {
+        const response = await fetch(`${API}/operator/confirm/${token}`);
+        if (!response.ok) {
+            return response.json();
+        };
+
+        return response.json();
+    } catch (err) {
+        console.log("Error getting containers");
+        console.log(err);
+        return false;
+    }
+};
+
 // Login Operator
-async function loginOperator({email, password, type, hostId}) {
+async function loginOperator({ email, password, type, hostId }) {
     try {
         const res = await fetch(`${API}/operator`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password, opType:type, hostId }),
+            body: JSON.stringify({ email, password, opType: type, hostId }),
             credentials: 'include',
         });
 
@@ -113,7 +129,7 @@ async function loginOperator({email, password, type, hostId}) {
     }
 };
 
-async function signupAdmin(username, email, password) {
+async function signupAdmin({ username, email, password }) {
     try {
         const req = await fetch(`${API}/operator/signup`, {
             method: "POST",
@@ -188,16 +204,17 @@ async function resetPassword({ token, password }) {
 }
 
 // Get all operators
-async function getAllOperators(hostId) {
-    try {
-        const res = await fetch(`${API}/operator/hostId`);
-        const data = await res.json();
-        return data;
-    } catch (err) {
-        console.log(err);
-        return [];
-    }
-}
+// async function getAllOperators(hostId) {
+//     try {
+//         const res = await fetch(`${API}/operator/hostId`);
+
+//         const data = res.json();
+//         return data;
+//     } catch (err) {
+//         console.log(err);
+//         return [];
+//     }
+// };
 
 // Add Operators
 async function addOperator(data) {
@@ -283,10 +300,11 @@ async function modifyOperator(data) {
 export {
     getAllRequests,
     deleteRequest,
+    tokenVerif,
     getAllContainers,
     loginOperator,
     signupAdmin,
-    getAllOperators,
+    // getAllOperators,
     addOperator,
     resetRequest,
     resetPassword,
